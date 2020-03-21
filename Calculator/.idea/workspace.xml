@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="212c7663-f304-4676-a214-e26407e1ccd4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calender_methods/Calender_methods.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Practice/Practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Wiederholung/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Boolean_If/Boolean" beforeDir="false" afterPath="$PROJECT_DIR$/../Boolean_If/Boolean" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Calculator/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Calculator/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Case/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Case/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Wiederholung/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Wiederholung/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Wiederholung/out/production/Wiederholung/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Wiederholung/out/production/Wiederholung/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Wiederholung/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Wiederholung/src/com/company/Main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1Xi0JowVjMKy44qaTCCoe4cKvUE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Practice" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.company.Main" />
+      <module name="Calculator" />
+      <option name="PROGRAM_PARAMETERS" value="5 / 2" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="212c7663-f304-4676-a214-e26407e1ccd4" name="Default Changelist" comment="" />
+      <created>1581513538920</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581513538920</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-2443" y="284" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581515734720">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state x="-2443" y="284" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1581515734720" />
+    <state x="-1693" y="-21" key="FileChooserDialogImpl" timestamp="1582013236485">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state x="-1693" y="-21" key="FileChooserDialogImpl/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582013236485" />
+    <state width="1491" height="398" key="GridCell.Tab.0.bottom" timestamp="1582036428318">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1491" height="398" key="GridCell.Tab.0.bottom/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582036428318" />
+    <state width="1491" height="398" key="GridCell.Tab.0.center" timestamp="1582036428318">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1491" height="398" key="GridCell.Tab.0.center/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582036428318" />
+    <state width="1491" height="398" key="GridCell.Tab.0.left" timestamp="1582036428318">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1491" height="398" key="GridCell.Tab.0.left/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582036428318" />
+    <state width="1491" height="398" key="GridCell.Tab.0.right" timestamp="1582036428318">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1491" height="398" key="GridCell.Tab.0.right/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582036428318" />
+    <state width="1310" height="488" key="GridCell.Tab.1.bottom" timestamp="1581951838877">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1310" height="488" key="GridCell.Tab.1.bottom/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1581951838877" />
+    <state width="1310" height="488" key="GridCell.Tab.1.center" timestamp="1581951838877">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1310" height="488" key="GridCell.Tab.1.center/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1581951838877" />
+    <state width="1310" height="488" key="GridCell.Tab.1.left" timestamp="1581951838877">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1310" height="488" key="GridCell.Tab.1.left/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1581951838877" />
+    <state width="1310" height="488" key="GridCell.Tab.1.right" timestamp="1581951838877">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state width="1310" height="488" key="GridCell.Tab.1.right/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1581951838877" />
+    <state x="-2509" y="-25" key="new project wizard" timestamp="1582013092519">
+      <screen x="-2560" y="-357" width="2560" height="1400" />
+    </state>
+    <state x="-2509" y="-25" key="new project wizard/0.0.1536.824/-2560.-357.2560.1400@-2560.-357.2560.1400" timestamp="1582013092519" />
+  </component>
+</project>
