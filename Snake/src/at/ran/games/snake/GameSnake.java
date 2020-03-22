@@ -21,6 +21,8 @@ public class GameSnake extends BasicGame {
     static MoveDir moveDir = MoveDir.DOWN;
     public static GameState gameState = GameState.START;
     public static GameMode gameMode;
+    int pressed = 0;
+    MoveDir nextDir;
 
     public GameSnake(String title) {
         super(title);
@@ -42,6 +44,12 @@ public class GameSnake extends BasicGame {
             snake.moveSnake();
             snake.checkIfCollision();
             snake.checkForFood(snake);
+            if (pressed == 2) {
+                moveDir = nextDir;
+                pressed--;
+            } else {
+                pressed = 0;
+            }
         }
     }
 
@@ -114,37 +122,50 @@ public class GameSnake extends BasicGame {
     }
 
     // Todo: can switch 180° if two cursors are pressed before deltaSum = 50, maybe fix, how?
+    // Todo: above fixed but 2nd keyPress gets lost...
     public void keyPressed(int key, char c) {
         switch (key) {
             case Input.KEY_UP: {
-                if (moveDir == moveDir.DOWN) {
+                if (moveDir == moveDir.DOWN || pressed == 1) {
+                    this.nextDir = MoveDir.UP;
+                    pressed = 2;
                     break;
                 } else {
                     this.moveDir = MoveDir.UP;
+                    pressed = 1;
                     break;
                 }
             }
             case Input.KEY_DOWN: {
-                if (moveDir == moveDir.UP) {
+                if (moveDir == moveDir.UP || pressed == 1) {
+                    this.nextDir = MoveDir.DOWN;
+                    pressed = 2;
                     break;
                 } else {
                     this.moveDir = MoveDir.DOWN;
+                    pressed = 1;
                     break;
                 }
             }
             case Input.KEY_LEFT: {
-                if (moveDir == moveDir.RIGHT) {
+                if (moveDir == moveDir.RIGHT || pressed == 1) {
+                    this.nextDir = MoveDir.LEFT;
+                    pressed = 2;
                     break;
                 } else {
                     this.moveDir = MoveDir.LEFT;
+                    pressed = 1;
                     break;
                 }
             }
             case Input.KEY_RIGHT: {
-                if (moveDir == moveDir.LEFT) {
+                if (moveDir == moveDir.LEFT || pressed == 1) {
+                    this.nextDir = MoveDir.RIGHT;
+                    pressed = 2;
                     break;
                 } else {
                     this.moveDir = MoveDir.RIGHT;
+                    pressed = 1;
                     break;
                 }
             }

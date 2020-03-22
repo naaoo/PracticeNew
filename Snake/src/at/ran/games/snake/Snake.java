@@ -122,7 +122,7 @@ public class Snake extends Block{
     }
 
     public void checkIfBorder() {
-        if (this.head.x < GameSnake.frame || this.head.x > GameSnake.frame + GameSnake.fieldX || this.head.y < GameSnake.frame || this.head.y > GameSnake.frame + GameSnake.fieldY) {
+        if (this.head.x < GameSnake.frame || this.head.x == GameSnake.fieldX + GameSnake.frame || this.head.y < GameSnake.frame || this.head.y == GameSnake.fieldY + GameSnake.frame) {
             GameSnake.gameState = GameState.GAME_OVER;
             setScore();
         }
