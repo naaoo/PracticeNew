@@ -18,7 +18,6 @@ public class GameSnake extends BasicGame {
     Block head = new Block(BlockType.HEAD, 0, 0);
     Snake snake = new Snake(head);
     static MoveDir moveDir = MoveDir.DOWN;
-    //static boolean keypressed = false;
 
     public GameSnake(String title) {
         super(title);

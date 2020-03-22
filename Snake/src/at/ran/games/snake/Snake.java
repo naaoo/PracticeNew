@@ -111,7 +111,7 @@ public class Snake extends Block{
     public void checkIfCollision() {
         for (int i = 0; i < this.bodyParts; i++) {
             if (this.body[i].x == this.head.x && this.body[i].y == this.head.y) {
-                System.exit(0);
+                System.exit(0); // Todo: Implement Game Over
             }
         }
     }
