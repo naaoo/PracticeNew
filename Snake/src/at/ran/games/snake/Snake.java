@@ -49,21 +49,26 @@ public class Snake extends Block{
     }
 
     public void moveHead() {
-        switch (GameSnake.moveDir) {
-            case UP:
-                this.head.y -= size;
-                break;
-            case DOWN:
-                this.head.y += size;
-                break;
-            case LEFT:
-                this.head.x -= size;
-                break;
-            case RIGHT:
-                this.head.x += size;
-                break;
+        if (GameSnake.gameState == GameState.RUNNING) {
+            switch (GameSnake.moveDir) {
+                case UP:
+                    this.head.y -= size;
+                    break;
+                case DOWN:
+                    this.head.y += size;
+                    break;
+                case LEFT:
+                    this.head.x -= size;
+                    break;
+                case RIGHT:
+                    this.head.x += size;
+                    break;
+            }
+            if (GameSnake.gameMode == GameMode.EXPERT) {
+                this.checkIfBorder();
+            }
+            this.checkSetBack();
         }
-        this.checkSetBack();
     }
 
     public void checkForFood(Snake snake) {
@@ -107,16 +112,29 @@ public class Snake extends Block{
         moveHead();
     }
 
-    //Todo: implement game modes
     public void checkIfCollision() {
         for (int i = 0; i < this.bodyParts; i++) {
             if (this.body[i].x == this.head.x && this.body[i].y == this.head.y) {
-                System.exit(0); // Todo: Implement Game Over
+                GameSnake.gameState = GameState.GAME_OVER;
+                setScore();
             }
         }
     }
 
-    // more flexible method (no fixed body[size])
+    public void checkIfBorder() {
+        if (this.head.x < GameSnake.frame || this.head.x > GameSnake.frame + GameSnake.fieldX || this.head.y < GameSnake.frame || this.head.y > GameSnake.frame + GameSnake.fieldY) {
+            GameSnake.gameState = GameState.GAME_OVER;
+            setScore();
+        }
+    }
+
+    private void setScore() {
+        if (GameSnake.score > GameSnake.highScore) {
+            GameSnake.highScore = GameSnake.score;
+        }
+    }
+
+    // more flexible addBodyPart method (no fixed body[size])
     private void addBodyPart1(Block bodyPart) {
         Block[] bodyTemp = Arrays.copyOf(this.body, this.body.length + 1);
         this.body = bodyTemp;

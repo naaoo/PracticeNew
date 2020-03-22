@@ -8,16 +8,19 @@ public class GameSnake extends BasicGame {
     // Umständlich: viele Methoden/Felder die public static sein müssen um Sie von überall aufrufen zu können, hier würde es sicher besser strukturierte Lösungen geben...
     // BlockType war eigentlich unnötig, wird nie wirklich genutzt
 
-    public static int fieldX = 800;
-    public static int fieldY = 800;
+    public static int fieldX = 700;
+    public static int fieldY = 700;
     public static int frame = 50;
-    private int speed = 100;
+    private int speed;
     public static int amountFood = 25;
     private int deltaSum = 0;
     public static int score = 0;
+    public static int highScore = 0;
     Block head = new Block(BlockType.HEAD, 0, 0);
     Snake snake = new Snake(head);
     static MoveDir moveDir = MoveDir.DOWN;
+    public static GameState gameState = GameState.START;
+    public static GameMode gameMode;
 
     public GameSnake(String title) {
         super(title);
@@ -26,8 +29,8 @@ public class GameSnake extends BasicGame {
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         Food.placeFood(snake);
-        snake.head.x = 100;
-        snake.head.y = 100;
+        snake.head.x = frame + 50;
+        snake.head.y = frame + 50;
     }
 
     @Override
@@ -44,14 +47,46 @@ public class GameSnake extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        // Score
-        graphics.drawString("Score: " + score, fieldX - frame, 20);
-        // Border
-        graphics.drawRect(frame, frame, fieldX, fieldY);
-        // Snake
-        snake.drawSnake(graphics);
-        // Food
-        Food.drawFood(graphics);
+        switch (this.gameState) {
+            case START :
+                graphics.drawString("     Welcome to Snake!\n\n\nPlease choose your game mode:", frame + fieldX / 2 - 135, frame + fieldY / 2 - 130);
+                graphics.drawString("1: Beginner\n2: Advanced\n3: Expert (Border = death)", frame + fieldX / 2 - 135, frame + fieldY / 2 - 10);
+                break;
+            case MODE_CHOSEN :
+                graphics.drawString("Press Space to start the game", fieldX / 2 - 80, fieldY / 2);
+                break;
+            case RUNNING :
+                // Score
+                graphics.drawString("Difficulty: " + this .gameMode + "        Session Highscore: " + highScore + "         Score: " + score, fieldX - frame - 500, 20);
+                // Border
+                graphics.drawRect(frame, frame, fieldX, fieldY);
+                // Snake
+                snake.drawSnake(graphics);
+                // Food
+                Food.drawFood(graphics);
+                break;
+            case GAME_OVER :
+                graphics.drawString("          Game over\n\n\nScore: " + score + " (Session highscore: " + highScore + ")\n\n-) Play again? (press y / n)\n\n-) Back to menu (press m)", fieldX / 2 - 75, fieldY / 2 - 70);
+                break;
+        }
+    }
+
+    private void chooseMode(int mode) {
+        switch (mode) {
+            case 1 :
+                this.gameMode = GameMode.BEGINNER;
+                this.speed = 150;
+                break;
+            case 2 :
+                this.gameMode = GameMode.ADVANCED;
+                this.speed = 100;
+                break;
+            case 3 :
+                this.gameMode = GameMode.EXPERT;
+                this.speed = 100;
+                break;
+        }
+        this.gameState = GameState.MODE_CHOSEN;
     }
 
     public static void main(String[] argv) {
@@ -62,6 +97,20 @@ public class GameSnake extends BasicGame {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
+
+    public void resetGame() {
+        snake.body = new Block[10000];
+        Food.foodArr = new Block[GameSnake.amountFood];
+        Food.placeFood(snake);
+        snake.bodyParts = 0;
+        // reset position
+        snake.head.x = frame + 50;
+        snake.head.y = frame + 50;
+        // reset direction
+        this.moveDir = MoveDir.DOWN;
+        this.score = 0;
+
     }
 
     // Todo: can switch 180° if two cursors are pressed before deltaSum = 50, maybe fix, how?
@@ -76,7 +125,6 @@ public class GameSnake extends BasicGame {
                 }
             }
             case Input.KEY_DOWN: {
-
                 if (moveDir == moveDir.UP) {
                     break;
                 } else {
@@ -100,7 +148,50 @@ public class GameSnake extends BasicGame {
                     break;
                 }
             }
+            case Input.KEY_1:
+            case Input.KEY_NUMPAD1: {
+                chooseMode(1);
+                break;
+            }
+            case Input.KEY_2:
+            case Input.KEY_NUMPAD2: {
+                chooseMode(2);
+                break;
+            }
+            case Input.KEY_3:
+            case Input.KEY_NUMPAD3: {
+                chooseMode(3);
+                break;
+            }
+            case Input.KEY_SPACE: {
+                if (this.gameState == GameState.MODE_CHOSEN) {
+                    this.gameState = GameState.RUNNING;
+                }
+                break;
+            }
+            case Input.KEY_Y: {
+                if (this.gameState == GameState.GAME_OVER) {
+                    this.gameState = GameState.MODE_CHOSEN;
+                    resetGame();
+                }
+                break;
+            }
+            case Input.KEY_N: {
+                if (this.gameState == GameState.GAME_OVER) {
+                    this.gameState = GameState.START;
+                    resetGame();
+                    System.exit(0);
+                }
+                break;
+            }
+            case Input.KEY_M: {
+                if (this.gameState == GameState.GAME_OVER) {
+                    this.gameState = GameState.START;
+                    resetGame();
+                    GameSnake.highScore = 0;
+                }
+                break;
+            }
         }
-
     }
 }

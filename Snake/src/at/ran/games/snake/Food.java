@@ -36,7 +36,6 @@ public class Food extends Block{
                         taken = false;
                     }
                 }
-
             }
             i++;
         }
@@ -46,13 +45,13 @@ public class Food extends Block{
     private static boolean checkIfOpen(Snake snake, int x, int y) {
         boolean open = true;
         for (int i = 0; i < snake.bodyParts; i++) {
-            if (snake.body[i].x == x && snake.body[i].y == y) {
+            if (snake.body[i] != null && snake.body[i].x == x && snake.body[i].y == y) {
                 open = false;
                 break;
             }
         }
-
-        for (Block bodyPart : snake.body) {
+        // leftover?
+        /*for (Block bodyPart : snake.body) {
             if (bodyPart != null) {
                 if (bodyPart.x == x && bodyPart.y == y) {
                     open = false;
@@ -60,6 +59,7 @@ public class Food extends Block{
                 }
             }
         }
+         */
         return open;
     }
 
