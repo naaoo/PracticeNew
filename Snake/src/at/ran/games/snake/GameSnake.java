@@ -5,8 +5,8 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 public class GameSnake extends BasicGame {
-    // Umständlich: viele Methoden/Felder die public static sein müssen um Sie von überall aufrufen zu können, hier würde es sicher besser strukturierte Lösungen geben...
-    // BlockType war eigentlich unnötig, wird nie wirklich genutzt
+    // a lot of parameters are public static to be accessible from everywhere, better structured solutions possible...?
+    // BlockType was unnecessary, never really used
 
     public static int fieldX = 700;
     public static int fieldY = 700;
@@ -121,12 +121,12 @@ public class GameSnake extends BasicGame {
 
     }
 
-    // Todo: can switch 180° if two cursors are pressed before deltaSum = 50, maybe fix, how?
-    // Todo: above fixed but 2nd keyPress gets lost...
     public void keyPressed(int key, char c) {
         switch (key) {
             case Input.KEY_UP: {
-                if (moveDir == moveDir.DOWN || pressed == 1) {
+                if (moveDir == moveDir.DOWN) {
+                    break;
+                } else if (pressed == 1) {
                     this.nextDir = MoveDir.UP;
                     pressed = 2;
                     break;
@@ -137,7 +137,9 @@ public class GameSnake extends BasicGame {
                 }
             }
             case Input.KEY_DOWN: {
-                if (moveDir == moveDir.UP || pressed == 1) {
+                if (moveDir == moveDir.UP) {
+                    break;
+                } else if (pressed == 1) {
                     this.nextDir = MoveDir.DOWN;
                     pressed = 2;
                     break;
@@ -148,7 +150,10 @@ public class GameSnake extends BasicGame {
                 }
             }
             case Input.KEY_LEFT: {
-                if (moveDir == moveDir.RIGHT || pressed == 1) {
+                if (moveDir == moveDir.RIGHT) {
+                    break;
+                }
+                else if (pressed == 1) {
                     this.nextDir = MoveDir.LEFT;
                     pressed = 2;
                     break;
@@ -159,7 +164,10 @@ public class GameSnake extends BasicGame {
                 }
             }
             case Input.KEY_RIGHT: {
-                if (moveDir == moveDir.LEFT || pressed == 1) {
+                if (moveDir == moveDir.LEFT) {
+                    break;
+                }
+                else if (pressed == 1) {
                     this.nextDir = MoveDir.RIGHT;
                     pressed = 2;
                     break;
