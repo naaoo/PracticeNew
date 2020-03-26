@@ -1,20 +1,21 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Person {
     String name;
     Department department;
-
-    public static Person[] persons = new Person[50];
-    public static int personCounter = 0;
+    public static ArrayList<Person> persons = new ArrayList<>();
 
     public Person(String name, Department department) {
         this.name = name;
         this.department = department;
-        addPerson(this);
+        department.employees.add(this);
+        persons.add(this);
     }
 
-    public void addPerson(Person person) {
-        persons[personCounter] = this;
-        personCounter++;
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Enclosure {
     EnclosureTypes barrier;
     int size;
@@ -7,8 +9,7 @@ public class Enclosure {
     Person keeper;
     boolean water;
     boolean topNet;
-    int amountAnimals = 0;
-    Animal[] animalsArr = new Animal[100];
+    ArrayList<Animal> animalsArr = new ArrayList<>();
 
     public static final int MIN_SIZE = 0;
 
@@ -19,8 +20,7 @@ public class Enclosure {
         this.keeper = keeper;
         this.water = water;
         this.topNet = topNet;
-        zoo.enclosureArr[zoo.amountEnclosures] = this;
-        zoo.amountEnclosures++;
+        zoo.enclosureArr.add(this);
     }
 
     @Override

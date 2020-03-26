@@ -1,13 +1,12 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Zoo {
     Person head;
     String location;
-    int amountEnclosures = 0;
-    int amountAnimals = 0;
-    int amountEmployee = 0;
-    Enclosure[] enclosureArr = new Enclosure[100];
-    Person[] employeeArr = new Person[100];
+    ArrayList<Enclosure> enclosureArr = new ArrayList<>();
+    ArrayList<Person> employeeArr = new ArrayList<>();
 
     public Zoo(String location) {
         this.location = location;
@@ -18,23 +17,32 @@ public class Zoo {
     public void printZooData() {
         System.out.println("Zoo: " + this.location);
         System.out.println("Head: " + this.head);
-        System.out.println("Animals (Overall): " + this.amountAnimals);
-        System.out.println("Enclosures: " + this.amountEnclosures);
-        System.out.println("Employees: " + this.amountEmployee);
+        System.out.println("Animals (Overall): " + countAnimals());
+        System.out.println("Enclosures: " + this.enclosureArr.size());
+        System.out.println("Employees: " + this.employeeArr.size());
         System.out.println();
     }
+    public int countAnimals() {
+        int count = 0;
+        for (Enclosure enclosure : enclosureArr) {
+            count += enclosure.animalsArr.size();
+        }
+        return count;
+    }
+
     public void countAnimalsSpecies(String species) {
         int counterOvr = 0;
         System.out.println("Animal count: species " + species);
-        for (int i = 0; i < amountEnclosures; i++) {
+        for (Enclosure enclosure : enclosureArr) {
             int counterEnc = 0;
-            for (int j = 0; j < enclosureArr[i].amountAnimals; j++) {
-                if (enclosureArr[i].animalsArr[j].species.equalsIgnoreCase(species)) {
+            for (Animal animal : enclosure.animalsArr) {
+                if (animal.species.equalsIgnoreCase(species)) {
                     counterEnc++;
                     counterOvr++;
+
                 }
             }
-            System.out.println("\t" + enclosureArr[i] + ": " + counterEnc);
+            System.out.println("\t" + enclosure + ": " + counterEnc);
         }
         System.out.println(species + "s overall: " + counterOvr + "\n");
     }
@@ -42,54 +50,40 @@ public class Zoo {
     public void countAnimalsGroup(String group) {
         int counterOvr = 0;
         System.out.println("Animal count: group " + group + " animals");
-        for (int i = 0; i < amountEnclosures; i++) {
+        for (Enclosure enclosure : enclosureArr) {
             int counterEnc = 0;
-            for (int j = 0; j < enclosureArr[i].amountAnimals; j++) {
-                if (enclosureArr[i].animalsArr[j].group.equalsIgnoreCase(group)) {
+            for (Animal animal : enclosure.animalsArr) {
+                if (animal.group.equalsIgnoreCase(group)) {
                     counterEnc++;
                     counterOvr++;
                 }
             }
-            System.out.println("\t" + enclosureArr[i] + ": " + counterEnc);
+            System.out.println("\t" + enclosure + ": " + counterEnc);
         }
         System.out.println(group + " animals overall: " + counterOvr + "\n");
     }
 
     // count species
     public void countSpecies() {
-        int counter = 0;
-        String[] speciesArr = new String[100];
+        ArrayList<String> speciesArr = new ArrayList<>();
         // Loop enclosures
-        for (int i = 0; i < amountEnclosures; i++) {
+        for (Enclosure enclosure : this.enclosureArr) {
             // Loop animals
-            for (int j = 0; j < enclosureArr[i].amountAnimals; j++) {
+            for (Animal animal : enclosure.animalsArr) {
                 // get species
-                String species = enclosureArr[i].animalsArr[j].species;
+                String species = animal.species;
+                // set first null to species
+                if (speciesArr.size() == 0) {
+                    speciesArr.add(species);
+                    break;
+                }
                 //check if species already in array
-                for (int k = 0; k < speciesArr.length; k++) {
-                    // set first null to species
-                    if (speciesArr[0] == null) {
-                        speciesArr[k] = species;
-                        counter++;
-                        break;
-                    }
-                    if (species.equalsIgnoreCase(speciesArr[k])) {
-                        break;
-                    }
-                    if (speciesArr[k] == null) {
-                        speciesArr[k] = species;
-                        counter++;
-                        break;
-                    }
+                if (!speciesArr.contains(species)) {
+                    speciesArr.add(species);
                 }
             }
         }
-        System.out.println(counter);
-    }
-
-    // getter/setter
-    public Person getHead() {
-        return head;
+        System.out.println("Amount of different species in zoo: " + speciesArr.size());
     }
 
     public void setHead(Person head) {

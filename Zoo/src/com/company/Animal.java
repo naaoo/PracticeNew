@@ -22,9 +22,7 @@ public class Animal {
         this.gender = gender;
         this.weight = weigth;
         this.age = age;
-        enclosure.animalsArr[enclosure.amountAnimals] = this;
-        zoo.amountAnimals++;
-        enclosure.amountAnimals++;
+        enclosure.animalsArr.add(this);
     }
 
     public String getGroup() {
