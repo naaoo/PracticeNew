@@ -1,5 +1,8 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
@@ -20,7 +23,7 @@ public class GasStation extends ServiceStation implements IGasStation{
     }
 
     @Override
-    public void treat(Car car) {
+    public void treat(Car car) throws IOException {
         car.driveTo(this.location);
         if (car.location == this.location) {
             fuelCar(car);
@@ -28,7 +31,19 @@ public class GasStation extends ServiceStation implements IGasStation{
     }
 
     @Override
-    public void fuelCar(Car car) {
+    public void writeReceipt(Car car, String service, double cost) throws IOException {
+        try {
+            File receipt = new File("C:\\Users\\David\\Documents\\nao\\Java-Programme\\Practice\\CarGasGarageNEW\\Receipt.txt");
+            FileWriter myWriter = new FileWriter(receipt, true);
+            myWriter.write("\n" + car.driver + ";" + car + ";" + service + ";" + cost);
+            myWriter.close();
+        } catch (IOException ex) {
+            System.out.println("File not found");
+        }
+    }
+
+    @Override
+    public void fuelCar(Car car) throws IOException {
         Scanner Scanner = new Scanner(System.in);
         DecimalFormat f = new DecimalFormat("#0.00");
         Double filling;
@@ -74,6 +89,7 @@ public class GasStation extends ServiceStation implements IGasStation{
                 System.out.println("This exceeds your available funds. Can't refill. (Max possible: " + f.format(car.driver.money / price) + "l)");
                 continue;
             }
+            writeReceipt(car, "Fuel", bill);
             System.out.println("Filling... Complete.");
             break;
         }

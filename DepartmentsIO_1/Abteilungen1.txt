@@ -1,0 +1,11 @@
+PersonenName;Abteilung;ParentAbteilung
+Franz Müller;Vorstand;
+Max Mustermann;Einkauf;Vorstand
+Frida Haudrauf;Einkauf Europa;Einkauf
+Alois Stich;Einkauf Europa;Einkauf
+Bernd Muster;Einkauf Italien;Einkauf Europa
+Ulla Neu;Einkauf USA;Einkauf
+Iris Tor;Vertrieb;Vorstand
+Paul Hinter;Vertrieb Europa;Vertrieb
+Ernst Bock; Vertrieb Europa;Vertrieb
+Olga Peter; Vertrieb Europa;Vertrieb

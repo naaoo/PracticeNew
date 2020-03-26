@@ -1,0 +1,3 @@
+Person;Car;Service;Cost
+Elon;Tesla (Driver: Elon, Location: FELDKIRCH) ;Fuel;13.53
+Elon;Tesla (Driver: Elon, Location: DORNBIRN) ;service + tires;160.0

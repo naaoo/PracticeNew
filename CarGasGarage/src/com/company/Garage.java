@@ -36,7 +36,6 @@ public class Garage {
         System.out.println("You have " + car.driver.money + "€ left\n");
         car.printCarData();
         this.partBill = 0.0D;
-        //Todo: needed service available?
 
     }
 

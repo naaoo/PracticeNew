@@ -1,8 +1,10 @@
 package com.company;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // ServiceStation = mother class of GasStation & Garage
         // treat(car) is applicable to all ServiceStations

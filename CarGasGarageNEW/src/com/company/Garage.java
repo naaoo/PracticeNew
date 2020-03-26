@@ -1,5 +1,8 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
@@ -16,11 +19,23 @@ public class Garage extends ServiceStation {
     }
 
     @Override
-    public void treat(Car car) {
+    public void treat(Car car) throws IOException {
         visitedBy(car);
     }
 
-    public void visitedBy(Car car) {
+    @Override
+    public void writeReceipt(Car car, String service, double cost) throws IOException {
+        try {
+            File receipt = new File("C:\\Users\\David\\Documents\\nao\\Java-Programme\\Practice\\CarGasGarageNEW\\Receipt.txt");
+            FileWriter myWriter = new FileWriter(receipt, true);
+            myWriter.write("\n" + car.driver + ";" + car + ";" + service + ";" + cost);
+            myWriter.close();
+        } catch (IOException ex) {
+            System.out.println("File not found");
+        }
+    }
+
+    public void visitedBy(Car car) throws IOException {
         Scanner scanner = new Scanner(System.in);
         DecimalFormat f = new DecimalFormat("#0.00");
 
@@ -29,17 +44,27 @@ public class Garage extends ServiceStation {
         String wantedService = scanner.nextLine();
         if (wantedService.substring(0, 1).equalsIgnoreCase("s")) {
             doService(car);
+            showBill(car, f);
+            writeReceipt(car, "service", partBill);
         } else if (wantedService.substring(0, 1).equalsIgnoreCase("t")) {
             changeTires(car);
+            showBill(car, f);
+            writeReceipt(car, "tires", partBill);
         } else if (wantedService.substring(0, 1).equalsIgnoreCase("b")) {
             doService(car);
             changeTires(car);
+            showBill(car, f);
+            writeReceipt(car, "service + tires", partBill);
         }
+
+        car.printCarData();
+        this.partBill = 0.0D;
+    }
+
+    private void showBill(Car car, DecimalFormat f) {
         System.out.println("Your bill is: " + partBill + "€\nThank you for your visit!");
         car.driver.money = car.driver.money - partBill;
         System.out.println("You have " + f.format(car.driver.money) + "€ left\n");
-        car.printCarData();
-        this.partBill = 0.0D;
     }
 
     public void changeTires(Car car) {
