@@ -24,9 +24,6 @@ public class Main {
                 String name = splittedValues[0].trim();
                 String departmentString = splittedValues[1].trim();
                 System.out.println(departmentString);
-                if (departmentString.substring(0,1).equals(" ")) {
-                    departmentString = departmentString.substring(1);
-                }
                 // if departmentString matches an department --> generate new Person in department
                 for (Department department : Department.departments) {
                         if (department.name.equals(departmentString)) {
