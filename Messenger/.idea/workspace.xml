@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="185129b5-3b2b-443d-a31f-4da63af9962f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/src/com/company/Car.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/src/com/company/Color.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CarConfigurator/src/com/company/Wheels.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Chat/.idea/libraries/mysql_mysql_connector_java_8_0_19.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DigitalNotebook/out/production/DigitalNotebook/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../DigitalNotebook/out/production/DigitalNotebook/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,9 +92,9 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="239" y="346" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1584625434449" />
-    <state x="187" y="324" key="new project wizard" timestamp="1584625458631">
+    <state x="187" y="324" key="new project wizard" timestamp="1585899556384">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="187" y="324" key="new project wizard/0.0.2560.1400@0.0.2560.1400" timestamp="1584625458631" />
+    <state x="187" y="324" key="new project wizard/0.0.2560.1400@0.0.2560.1400" timestamp="1585899556384" />
   </component>
 </project>
