@@ -74,6 +74,7 @@ public class Main {
                     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema?user=root");
                     Statement stmt = conn.createStatement();
                     // for some reason i got an "SQLSyntax error when executing both SQL Statements at the same time, therefore i split them...
+                    // understood now... multiple queries are not set true in url... Todo: maybe change, but this works as well
                     String insertReservation = "INSERT INTO reservations (presentation_id, amount_seats) VALUES (" + presentationId + ", " + amountSeats + ");";
                     String updatePresentation = "UPDATE presentations SET empty_seats = (empty_seats - " + amountSeats + ") WHERE presentation_id = " + presentationId + ";";
                     stmt.executeUpdate(insertReservation);
