@@ -23,13 +23,13 @@ public class Customer {
                 System.out.println("Password:");
                 String password = stringScanner.nextLine();
                 if (checkPassword(firstName, lastName, password)) {
-                    userId = getId(firstName, lastName);
+                    userId = selectId(firstName, lastName);
                     break;
                 } else {
                     tries--;
                     if (tries == 0) {
                         System.out.println("Log in failed!");
-                        // Todo: maybe implement user blocked or something similar (would need column in database and checkIfBlocked after asking for name)
+                        // Todo: maybe implement "user is blocked" (would need column 'blocked' [boolean] in database and checkIfBlocked after asking for name)
                     } else {
                         System.out.println("Wrong password. " + tries + " tries left");
                     }
@@ -39,7 +39,7 @@ public class Customer {
             System.out.println("Welcome to our delivery service " + firstName + "! Please continue to sign up:");
             // signUp
             completeSignUp(firstName, lastName);
-            userId = getId(firstName, lastName);
+            userId = selectId(firstName, lastName);
         }
         return userId;
     }
@@ -118,7 +118,7 @@ public class Customer {
         return passwordIsCorrect;
     }
 
-    private static int getId(String firstName, String lastName) {
+    private static int selectId(String firstName, String lastName) {
         int userId = 0;
         ResultSet rs;
         try {
@@ -135,6 +135,22 @@ public class Customer {
             ex.printStackTrace();
         }
         return userId;
+    }
+
+    public static String selectLocation(int userId) {
+        String location = "";
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Statement stmt = conn.createStatement();
+            String selectCustomers = "SELECT location FROM customers WHERE id=" + userId;
+             ResultSet rs = stmt.executeQuery(selectCustomers);
+            while (rs.next()) {
+                    location = rs.getString("location");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return location;
     }
 
 
