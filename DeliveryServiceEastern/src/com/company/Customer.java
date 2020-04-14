@@ -137,6 +137,7 @@ public class Customer {
         return userId;
     }
 
+
     public static String selectLocation(int userId) {
         String location = "";
         try {
@@ -152,6 +153,4 @@ public class Customer {
         }
         return location;
     }
-
-
 }

@@ -8,9 +8,9 @@ public class Order {
 
     public static void makeOrder(int customerId) {
         Scanner stringScanner = new Scanner(System.in);
-        boolean isComplete = false;
+        boolean orderIsComplete = false;
         openOrder(customerId);
-        while (!isComplete) {
+        while (!orderIsComplete) {
             // choose dish
             int dishId = chooseDish();
             // customize dish
@@ -24,13 +24,22 @@ public class Order {
             System.out.println("Would you like to add another dish? (Y/N)");
             String complete = stringScanner.nextLine().substring(0,1);
             if (complete.equalsIgnoreCase("n")) {
-                isComplete = true;
+                orderIsComplete = true;
             }
-            calculateOrderDetailPrice();
-            calculateOrderCosts();
-            //TOdo= past orders need to count up
-            // Todo = wrong discounts (eg David Engleder)
-            //Todo: print receipt
+        }
+        calculateOrderDetailPrice();
+        calculateOrderCosts();
+        updatePastOrders(customerId);
+    }
+
+    private static void updatePastOrders(int customerId) {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Statement stmt = conn.createStatement();
+            String updatePastOrders = "UPDATE customers SET past_orders = past_orders + 1 WHERE id = " + customerId;
+            stmt.executeUpdate(updatePastOrders);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -183,12 +192,13 @@ public class Order {
             ResultSet rsDishPrice = stmt.executeQuery(queryDishPrice);
             // calculate complete dish price
             while (rsDishPrice.next()) {
-                double price = 0.0D;
                 int id = rsDishPrice.getInt("id");
                 ResultSet rsAddsPrice = stmt1.executeQuery(queryAddsPrice);
+                double price = rsDishPrice.getDouble("price");
                 while (rsAddsPrice.next()) {
                     if (rsAddsPrice.getInt("order_details_id") == id) {
-                        price = rsDishPrice.getDouble("price") + rsAddsPrice.getDouble("sum(price)");
+                        double priceAdds = rsAddsPrice.getDouble("sum(price)");
+                        price = Math.round((price + priceAdds) * 100.0) / 100.0;
                     }
                 }
                 //write price into table order_details
@@ -203,6 +213,7 @@ public class Order {
             ex.printStackTrace();
         }
     }
+
 
     private static void calculateOrderCosts() {
         //calculate costs before discount
@@ -219,14 +230,14 @@ public class Order {
             while (rs.next()) {
                 // get costs
                 orderId = rs.getInt("order_id");
-                costsPure = rs.getDouble("sum(price)");
+                costsPure = Math.round((rs.getDouble("sum(price)")) * 100.0) / 100.0;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         // calculate costs after discount
         double discountRate = selectDiscountRate(orderId);
-        double costsAfterDiscount = costsPure * (1 - discountRate);
+        double costsAfterDiscount = Math.round((costsPure * (1 - discountRate)) * 100.0) / 100.0;
         // select delivery costs
         String queryDeliveryCosts = "SELECT price FROM ((locations INNER JOIN customers ON locations.name = customers.location) INNER JOIN orders ON customers.id = orders.customer_id) WHERE orders.id = " + orderId;
         try {
@@ -239,7 +250,7 @@ public class Order {
             ex.printStackTrace();
         }
         // calculate costs overall
-        double costsOverall = costsAfterDiscount + deliveryCosts;
+        double costsOverall = Math.round((costsAfterDiscount + deliveryCosts) * 100.0) / 100.0;
         try {
             String updateCosts = "UPDATE orders SET costs_pure = " + costsPure + ", costs_after_discount = " + costsAfterDiscount
                     + ", delivery_costs = " + deliveryCosts  + ", costs_overall = " +  costsOverall + " WHERE id = " + orderId;
@@ -261,10 +272,13 @@ public class Order {
             while (rs.next()) {
                 pastOrders = rs.getInt("past_orders");
             }
-            String queryPercentage = "SELECT percentage FROM discounts WHERE needed_orders >= " + pastOrders + " LIMIT 1";
+            String queryPercentage = "SELECT percentage FROM discounts WHERE needed_orders <= " + pastOrders + " ORDER BY percentage DESC LIMIT 1 ";
             rs = stmt.executeQuery(queryPercentage);
             while (rs.next()) {
-                discountRate = rs.getDouble("percentage") / 100;
+                double discount = rs.getDouble("percentage");
+                if (discount != 0) {
+                    discountRate = discount / 100;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
