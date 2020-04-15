@@ -5,9 +5,9 @@ import java.text.DecimalFormat;
 
 public class Receipt {
 
-    public static void printReceipt() {
+    public static void printReceipt(int customerId) {
         DecimalFormat df = new DecimalFormat("#.00");
-        int orderId = selectLatestOrder();
+        int orderId = selectLatestOrder(customerId);
         ResultSet rsDetails = selectOrderDetails(orderId);
         try {
             while (rsDetails.next()) {
@@ -105,12 +105,12 @@ public class Receipt {
         return rs;
     }
 
-    private static int selectLatestOrder() {
+    private static int selectLatestOrder(int customerId) {
         int orderId = 0;
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
             Statement stmt = conn.createStatement();
-            String queryOrderId = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
+            String queryOrderId = "SELECT id FROM orders WHERE customer_id = " + customerId + " ORDER BY id DESC LIMIT 1";
             ResultSet rs = stmt.executeQuery(queryOrderId);
             while (rs.next()) {
                 orderId = rs.getInt("id");

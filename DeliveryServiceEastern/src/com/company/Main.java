@@ -13,8 +13,9 @@ public class Main {
         // LogIn: checks if customer already in database and asks for password
         // if not known: completes sign up process
         int customerId = Customer.logIn();
-       // make Order: everything from choosing dishes to customizing and saving into database, finishes with calculating costs
+        // make Order: everything from choosing dishes to customizing and saving into database, finishes with calculating costs
         Order.makeOrder(customerId);
-        Receipt.printReceipt();
+        // prints receipt for customers' latest order
+        Receipt.printReceipt(customerId);
     }
 }
