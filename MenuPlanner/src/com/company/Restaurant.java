@@ -13,7 +13,7 @@ public class Restaurant {
     // future function ideas:
     // delete/change existing dishes/ingredients/locations
     // make better use of objects (Dish, Ingredient, Location)
-    //Database url should have been set as parameter once and retrieved from there instead of setting it at every connection...
+    static String databaseUrl = "jdbc:mysql://localhost:3306/restaurant?user=root";
 
     // Program 1: from owners side
     public static void ownerProgram() {
@@ -77,7 +77,7 @@ public class Restaurant {
             orders.createNewFile();
             FileWriter writer = new FileWriter(orders, false);
             try {
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+                Connection conn = DriverManager.getConnection(databaseUrl);
                 Statement stmt = conn.createStatement();
                 String query = "SELECT orders.id AS orderId, customers.id AS customerId, orders.costs_overall " +
                         "FROM orders INNER JOIN customers ON orders.customer_id = customers.id ";
@@ -107,7 +107,7 @@ public class Restaurant {
             FileWriter writer = new FileWriter(consumption, false);
             writer.write("IngredientId;IngredientName;Amount");
             try {
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+                Connection conn = DriverManager.getConnection(databaseUrl);
                 Statement stmt1 = conn.createStatement();
                 String detailCount = "SELECT ingredients.id, ingredients.name, COUNT(ingredients.id) AS count " +
                         "FROM (((order_details INNER JOIN dishes ON order_details.dish_id = dishes.id) " +
@@ -261,7 +261,7 @@ public class Restaurant {
     private static ResultSet makeQuery(String query) {
         ResultSet rs = null;
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
         } catch (SQLException ex) {
@@ -276,7 +276,7 @@ public class Restaurant {
         System.out.println("What's the name of the dish?");
         String name = stringScanner.nextLine();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String insertDish = "INSERT INTO dishes (name) VALUES ('" + name + "');";
             stmt.executeUpdate(insertDish);
@@ -304,7 +304,7 @@ public class Restaurant {
         double sellingPrice = doubleScanner.nextDouble();
         // update sellingPrice
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String updatePrice = "UPDATE dishes SET price = " + sellingPrice + "WHERE name = '" + name + "';";
             stmt.executeUpdate(updatePrice);
@@ -318,7 +318,7 @@ public class Restaurant {
     public static double getCalculatedPrice(String dishName) {
         double price = 0;
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String queryCalculatedPrice = "SELECT sum(price) FROM ingredients INNER JOIN dishes_ingredients ON ingredients.id = dishes_ingredients.ingredient_id WHERE dish_name = '" + dishName + "';";
             ResultSet rs = stmt.executeQuery(queryCalculatedPrice);
@@ -337,7 +337,7 @@ public class Restaurant {
         System.out.println("Please type in the ingredients' number below:");
         int ingredient = intScanner.nextInt();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String insertIngredient = "INSERT into dishes_ingredients (dish_name, ingredient_id) VALUES ('" + dishName + "', " + ingredient + ");";
             stmt.executeUpdate(insertIngredient);
@@ -350,7 +350,7 @@ public class Restaurant {
 
     public static void displayIngredients() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String querySelectIngredients = "SELECT * FROM ingredients";
             ResultSet rs = stmt.executeQuery(querySelectIngredients);
@@ -368,7 +368,7 @@ public class Restaurant {
 
     public static void displayDishes() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String querySelectDishes = "SELECT * FROM dishes";
             ResultSet rs = stmt.executeQuery(querySelectDishes);
@@ -393,7 +393,7 @@ public class Restaurant {
         System.out.println("Ingredient costs? (Use ',' if necessary)");
         double costs = doubleScanner.nextDouble();
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String insertIngredient = "INSERT INTO ingredients (name, price) VALUES ('" + name + "', " + costs + ");";
             stmt.executeUpdate(insertIngredient);
@@ -410,7 +410,7 @@ public class Restaurant {
 
     public static void displayLocations() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String querySelectLocations = "SELECT * FROM locations";
             ResultSet rs = stmt.executeQuery(querySelectLocations);
@@ -434,7 +434,7 @@ public class Restaurant {
         System.out.println("Delivery costs? (Use ',' if necessary)");
         double costs = doubleScanner.nextDouble();
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant?user=root");
+            conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
             String insertLocation = "INSERT INTO locations (name, price) VALUES ('" + name + "', " + costs + ");";
             stmt.executeUpdate(insertLocation);

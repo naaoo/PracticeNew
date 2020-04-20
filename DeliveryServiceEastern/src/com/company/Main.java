@@ -2,7 +2,7 @@ package com.company;
 
 public class Main {
 
-    // Es wäre sicher besser gewesen stärker in den Objekten zu arbeiten im Moment sind Objekte eher thematisch zusammengefasste Funktionssammlungen
+    // Es wäre sicher besser gewesen stärker in den Objekten zu arbeiten, im Moment sind Objekte eher thematisch zusammengefasste Funktionssammlungen
     // (Customer Parameter wie location, id usw. könnten im Bestellprozess im Programm angelegt werden,
     // selbes bei Orders (alle Infos könnten in Arrays liegen uns müssten so später nicht nochmals abgefragt werden...)
     // zu spät gecheckt...
