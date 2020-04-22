@@ -14,15 +14,18 @@ public class Main {
         adminSystem.fetchCourseData();
 
 
-        boolean logInFailed = true;
-        while (logInFailed) {
-            user = Person.logIn();
-            if (user != null) {
-                logInFailed = false;
+        while (true) {
+            boolean logInFailed = true;
+            while (logInFailed) {
+                user = Person.logIn();
+                if (user != null) {
+                    logInFailed = false;
+                }
             }
+            // depending on role, different methods are offered:
+            user.useSystem();
+            user = null;
         }
-        // depending on role, different methods are offered:
-        user.useSystem();
 
 
 
