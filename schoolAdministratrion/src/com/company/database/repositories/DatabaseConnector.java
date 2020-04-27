@@ -1,4 +1,4 @@
-package com.company;
+package com.company.database.repositories;
 
 import java.sql.*;
 
@@ -7,7 +7,16 @@ public class DatabaseConnector {
     private Statement stmt = null;
     private  String databaseUrl = "jdbc:mysql://localhost:3306/school_administration?user=root";
 
-    public DatabaseConnector() {
+    private static DatabaseConnector instance;
+
+    public static DatabaseConnector getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnector();
+        }
+        return instance;
+    }
+
+    private DatabaseConnector() {
     }
 
     private void buildConnection() {

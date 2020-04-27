@@ -1,14 +1,20 @@
-package com.company;
+package com.company.controller;
 
-import java.util.ArrayList;
+import com.company.Main;
+import com.company.database.model.Course;
+import com.company.database.model.Person;
+import com.company.database.model.Role;
+import com.company.database.model.Teacher;
+import com.company.database.repositories.DatabaseConnector;
+import com.company.view.View;
+
 import java.util.Scanner;
 
-public class Administrator extends Person{
-    private static DatabaseConnector dbConnector = new DatabaseConnector();
-
+public class AdministratorController extends PersonController{
+    private static DatabaseConnector dbConnector = DatabaseConnector.getInstance();
 
     @Override
-    public void useSystem() {
+    public void startSystem() {
         Scanner intScanner = new Scanner(System.in);
         boolean running = true;
         while (running) {
@@ -36,26 +42,25 @@ public class Administrator extends Person{
         System.out.println("Teacher (Please type in ID below):");
         displayTeachers();
         int teacherId = intScanner.nextInt();
-        Teacher teacher = (Teacher)Main.adminSystem.personsArr.get(teacherId - 1);
-        dbConnector.insert("INSERT INTO course (name, max_amount_seats, teacher_id)" +
-                "VALUES ('" + name + "', '" + capacity + "', '" + teacherId + "');");
-        Main.adminSystem.fetchCourseData();
+        Teacher teacher = (Teacher) Main.personRepo.personsArr.get(teacherId - 1);
+        Course course = new Course(null, name, capacity, teacher);
+        Main.courseRepo.create(course);
     }
 
     private void changeTeacher() {
         Scanner intScanner = new Scanner(System.in);
         System.out.println("Which courses' teacher do you want to change? (Please enter below)");
-        displayCourses();
+        View.displayCourses();
         int courseId = intScanner.nextInt();
         System.out.println("Who shall be the courses' new teacher?");
         displayTeachers();
         int teacherId = intScanner.nextInt();
         dbConnector.update("UPDATE course SET teacher_id = '" + teacherId + "' WHERE course.id = " + courseId);
-        Main.adminSystem.fetchCourseData();
+        Main.courseRepo.findAll();
     }
 
     private void displayTeachers() {
-        for (Person person : Main.adminSystem.personsArr) {
+        for (Person person : Main.personRepo.personsArr) {
             if (person.role.equals(Role.TEACHER)) {
                 System.out.println(person.id + ": " + person.firstName + " " + person.lastName);
             }
@@ -71,13 +76,8 @@ public class Administrator extends Person{
         String lName = stringScanner.nextLine();
         System.out.println("Role:\n1: Administrator\n2: Student\n3: Teacher");
         Role role = Role.values()[intScanner.nextInt() - 1];
-        dbConnector.insert("INSERT INTO person (last_name, first_name, role) " +
-                "VALUES ('" + lName + "', '" + fName + "', '" + role.toString() + "');");
-        System.out.println("Person created with default password (1234)");
-        Main.adminSystem.fetchUserData();
+        Person person = new Person(null, fName, lName, null, role);
+        Main.personRepo.create(person);
     }
 
-    public Administrator(int id, String firstName, String lastName, String password, Role role) {
-        super(id, firstName, lastName, password, role);
-    }
 }

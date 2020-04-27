@@ -1,15 +1,23 @@
-package com.company;
+package com.company.database.repositories;
+
+import com.company.Main;
+import com.company.database.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class AdministrationSystem {
-    private DatabaseConnector dbConnector = new DatabaseConnector();
-    ArrayList<Person> personsArr;
-    ArrayList<Course> coursesArr;
+public class PersonRepository implements Repository{
+    private DatabaseConnector dbConnector;
+    public ArrayList<Person> personsArr = new ArrayList<>();
 
-    public void fetchUserData() {
+    public PersonRepository() {
+        this.dbConnector = DatabaseConnector.getInstance();
+    }
+
+    @Override
+    public List findAll() {
         ArrayList<Person> persons = new ArrayList<>();
         String queryUser = "SELECT * FROM person";
         ResultSet rs = dbConnector.fetchData(queryUser);
@@ -39,30 +47,27 @@ public class AdministrationSystem {
             ex.printStackTrace();
         }
         this.personsArr = persons;
+        return persons;
     }
 
-    public void fetchCourseData() {
-        ArrayList<Course> courses = new ArrayList<>();
-        String queryUser = "SELECT * FROM course";
-        ResultSet rs = dbConnector.fetchData(queryUser);
-        try {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                int seats = rs.getInt("max_amount_seats");
-                int teacherId = rs.getInt("teacher_id");
-                Person teacher = this.personsArr.get(teacherId - 1);
-                Course course = new Course(id, name, seats, teacher);
-                courses.add(course);
-                this.coursesArr = courses;
-            }
-            dbConnector.closeConnection();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    // could be found in database as well, but to me it makes more sense to find it in existing repo,
+    // so no duplicates are created
+    @Override
+    public Object findOne(int id) {
+        Person person = Main.personRepo.personsArr.get(id);
+        return person;
     }
 
-    public AdministrationSystem() {
+    @Override
+    public void create(Object entity) {
+        Person person = (Person) entity;
+        String lName = person.lastName;
+        String fName = person.firstName;
+        Role role = person.role;
+        dbConnector.insert("INSERT INTO person (last_name, first_name, role) " +
+                "VALUES ('" + lName + "', '" + fName + "', '" + role.toString() + "');");
+        System.out.println("Person created with default password (1234)");
+        Main.personRepo.findAll();
+
     }
 }
-

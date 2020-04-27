@@ -1,17 +1,25 @@
-package com.company;
+package com.company.controller;
 
-import java.sql.*;
-import java.util.ArrayList;
+import com.company.Main;
+import com.company.database.model.Person;
+import com.company.database.repositories.DatabaseConnector;
+
 import java.util.Scanner;
 
-public class Person {
-    private static DatabaseConnector dbConnector = new DatabaseConnector();
+public class PersonController{
+    private static DatabaseConnector dbConnector = DatabaseConnector.getInstance();
+    private static StudentController studentController = new StudentController();
+    private static AdministratorController administratorController = new AdministratorController();
+    private static TeacherController teacherController = new TeacherController();
 
-    int id;
-    String firstName;
-    String lastName;
-    String password;
-    Role role;
+    // useSystem depends on each sub class (admin, student, teacher) and is defined in their specific controller
+    public void startSystem() {
+        switch (Main.user.role) {
+            case ADMINISTRATOR: administratorController.startSystem(); break;
+            case STUDENT: studentController.startSystem(); break;
+            case TEACHER: teacherController.startSystem(); break;
+        }
+    }
 
     public static Person logIn() {
         Person user = null;
@@ -21,7 +29,7 @@ public class Person {
         String[] splitName = fullName.split(" ");
         String firstName = splitName[0];
         String lastName = splitName[1];
-        for (Person person : Main.adminSystem.personsArr) {
+        for (Person person : Main.personRepo.personsArr) {
             if (person.firstName.equalsIgnoreCase(firstName) && person.lastName.equalsIgnoreCase(lastName)) {
                 user = person;
             }
@@ -59,16 +67,6 @@ public class Person {
         //Todo : could be blocked if 3times wrong (Currently logIn starts new)
     }
 
-    public void useSystem() {
-    }
-
-    public void displayCourses() {
-        for (Course course : Main.adminSystem.coursesArr) {
-            System.out.println(course.id + ": " + course.name + " (Capacity: " +
-                    course.maxSeats + ", Teacher: " + course.teacher.lastName + ")");
-        }
-    }
-
     public void changePassword() {
         Scanner stringScanner = new Scanner(System.in);
         System.out.println("Please enter your old password:");
@@ -86,16 +84,7 @@ public class Person {
                 dbConnector.update("UPDATE person SET password = '" + newPassword + "' WHERE id= " + Main.user.id);
             }
         }
-        Main.adminSystem.fetchUserData();
+        Main.personRepo.findAll();
     }
 
-
-    public Person(int id, String firstName, String lastName, String password, Role role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.role = role;
-
-    }
 }
