@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Main {
 
-    // Generelle Frage an den Trainer: ist die Art wie ich Datenbankverbindungen aufbaue und schließe ok,
-    // oder ist es ratsam sich stärker an die in den Slides verwendete Art zu halten (finally Block usw)?
     // Todo: (Maybe) if an error occurs in one step (e.g. Customer.login) program still tries to run all other steps. would be a problem in reality
 
     static String databaseUrl = "jdbc:mysql://localhost:3306/restaurant?user=root";

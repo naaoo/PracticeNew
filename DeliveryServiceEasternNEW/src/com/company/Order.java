@@ -12,7 +12,7 @@ public class Order{
     ArrayList<Dish> dishes = new ArrayList<>();
     double costsPure;
     double costsAfterDiscount;
-    // not necessarily needed here since location already has deliveryCosts:
+    // not necessarily needed here since location already knows deliveryCosts:
     double deliveryCosts;
     double costsOverall;
 
