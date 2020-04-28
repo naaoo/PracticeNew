@@ -31,10 +31,5 @@ public class Main {
             // after use, user is set null (= logged out)
             user = null;
         }
-
-
-
-
-
     }
 }
