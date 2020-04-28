@@ -1,13 +1,14 @@
 package com.company;
 
-import java.sql.*;
-import java.util.Scanner;
+import com.company.controller.Controller;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Restaurant.ownerProgram();
+    public static Controller controller = new Controller();
 
+    public static void main(String[] args) {
+
+        controller.ownerProgram();
     }
 
 
