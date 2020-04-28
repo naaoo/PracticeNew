@@ -1,8 +1,8 @@
-package com.company;
+package com.company.database.model;
 
 public class Location {
-    String name;
-    double deliveryCosts;
+    public String name;
+    public double deliveryCosts;
 
     public Location(String name, double deliveryCosts) {
         this.name = name;
