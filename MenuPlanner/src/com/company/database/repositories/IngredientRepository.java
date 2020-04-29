@@ -48,5 +48,6 @@ public class IngredientRepository implements Repository{
         String insertIngredient = "INSERT INTO ingredients (name, price) " +
                 "VALUES ('" + ingredient.name + "', " + ingredient.price + ");";
         dbConnector.insert(insertIngredient);
+        this.findAll();
     }
 }

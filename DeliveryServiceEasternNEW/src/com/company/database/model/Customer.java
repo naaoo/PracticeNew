@@ -8,8 +8,10 @@ public class Customer {
     public String password;
     public Integer amountPastOrders;
     public double discountRate;
+    public boolean isBlocked;
 
-    public Customer(int id, String firstName, String lastName, String locationName, double locationPrice, String password, int amountPastOrders, double discountRate) {
+    public Customer(int id, String firstName, String lastName, String locationName, double locationPrice,
+                    String password, int amountPastOrders, double discountRate, boolean isBlocked) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,5 +19,6 @@ public class Customer {
         this.password = password;
         this.amountPastOrders = amountPastOrders;
         this.discountRate = discountRate;
+        this.isBlocked = isBlocked;
     }
 }

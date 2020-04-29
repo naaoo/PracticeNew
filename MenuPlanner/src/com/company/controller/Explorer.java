@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
-public class QueryMaker {
+public class Explorer {
     public static void ownerMakeQueries() {
         Scanner intScanner = new Scanner(System.in);
         int mainMode = 0;
