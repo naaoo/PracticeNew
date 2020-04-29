@@ -1,11 +1,12 @@
 package com.company.view;
 
 import com.company.Main;
-import com.company.database.model.Dish;
-import com.company.database.model.Ingredient;
-import com.company.database.model.Order;
+import com.company.database.model.*;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class View {
 
@@ -55,7 +56,9 @@ public class View {
                 }
                 j++;
             }
-            System.out.print(")");
+            if (dish.subtractionsArr.size() != 0) {
+                System.out.print(")");
+            }
             j = 0;
             for (Ingredient ingredient : dish.additionsArr) {
                 if (j == 0) {
@@ -65,10 +68,12 @@ public class View {
                 }
                 j++;
             }
-            System.out.println(") -- " + df.format(dish.price) + "€");
+            if (dish.additionsArr.size() != 0) {
+                System.out.println(")");
+            }
+            System.out.println(" -- " + df.format(dish.price) + "€");
         }
         System.out.println("-------------------------------");
-
         System.out.println("Sum:                     " + df.format(order.costsPure) + "€");
         if (Main.controller.customer.discountRate != 0.0) {
             System.out.println("After discount:          " + df.format(order.costsAfterDiscount) + "€");
@@ -76,5 +81,20 @@ public class View {
         System.out.println("+ delivery costs:        " + df.format(order.deliveryCosts) + "€");
         System.out.println("                         ------");
         System.out.println("Final price:             " + df.format(order.costsOverall) + "€\n\nThank you for your order!");
+    }
+
+    public static void displayTables(ArrayList<Table> tables) {
+        for (Table table : tables) {
+            System.out.println("Table " + table.id + " (max seats: " + table.maxSeats + ")");
+        }
+    }
+
+    public static void displayMyReservations() {
+        DateTimeFormatter df = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
+        for (Reservation reservation : Main.controller.reservationRepository.reservationArr) {
+            if (reservation.customerId == Main.controller.customer.id) {
+                System.out.println("ID: " + reservation.id + ", time: " + df.print(reservation.timeStart));
+            }
+        }
     }
 }

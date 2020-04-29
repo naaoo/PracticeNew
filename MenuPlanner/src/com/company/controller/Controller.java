@@ -4,12 +4,10 @@ import com.company.Main;
 import com.company.database.model.Dish;
 import com.company.database.model.Ingredient;
 import com.company.database.model.Location;
-import com.company.database.repositories.DishRepository;
-import com.company.database.repositories.IngredientRepository;
-import com.company.database.repositories.LocationRepository;
+import com.company.database.model.Table;
+import com.company.database.repositories.*;
 import com.company.view.View;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,13 +15,16 @@ public class Controller {
     public static IngredientRepository ingredientRepository = new IngredientRepository();
     public static DishRepository dishRepository = new DishRepository();
     public static LocationRepository locationRepository = new LocationRepository();
+    public static TableRepository tableRepository = new TableRepository();
+    public static ReservationRepository reservationRepository = new ReservationRepository();
 
     public static void ownerProgram() {
         Scanner intScanner = new Scanner(System.in);
         int mode = 0;
         System.out.println("Hello restaurant owner! What would you like to manage?");
-        while (mode != 6) {
-            System.out.println("1: dishes\n2: ingredients\n3: delivery locations\n4: make queries\n5: exports\n6: quit");
+        while (mode != 8) {
+            System.out.println("1: dishes\n2: ingredients\n3: tables\n4: reservations\n" +
+                    "5: delivery locations\n6: make queries\n7: exports\n8: quit");
             mode = intScanner.nextInt();
             int subMode = 0;
             switch (mode) {
@@ -47,17 +48,39 @@ public class Controller {
                     } break;
                 case 3:
                     while (subMode != 3) {
-                        System.out.println("1: display locations\n2: add location\n3: back to menu");
+                        System.out.println("1: display tables\n2: add table\n3: back to menu");
                         subMode = intScanner.nextInt();
                         switch (subMode) {
-                            case 1: View.displayLocations(); break;
-                            case 2: addLocation(); break;
+                            case 1: View.displayTables(); break;
+                            case 2: addTable(); break;
                         }
                     } break;
                 case 4:
-                    QueryMaker.ownerMakeQueries();
-                    break;
+                    while (subMode != 3) {
+                        System.out.println("1: display reservations\n2: cancel reservation\n3: back to menu");
+                        subMode = intScanner.nextInt();
+                        switch (subMode) {
+                            case 1: View.displayReservations(); break;
+                            case 2: cancelReservation(); break;
+                        }
+                    } break;
                 case 5:
+                    while (subMode != 3) {
+                        System.out.println("1: display locations\n2: add location\n3: back to menu");
+                        subMode = intScanner.nextInt();
+                        switch (subMode) {
+                            case 1:
+                                View.displayLocations();
+                                break;
+                            case 2:
+                                addLocation();
+                                break;
+                        }
+                    } break;
+                case 6:
+                    Explorer.ownerMakeQueries();
+                    break;
+                case 7:
                     while (subMode != 3) {
                         System.out.println("1: export orders\n2: export ingredient consumption\n3: back to menu");
                         subMode = intScanner.nextInt();
@@ -147,6 +170,23 @@ public class Controller {
             }
         }
         return ingredient;
+    }
+
+    public static void addTable() {
+        Scanner intScanner = new Scanner(System.in);
+        System.out.println("How many seats does that table have?");
+        int seats = intScanner.nextInt();
+        Table table = new Table(null, seats);
+        tableRepository.create(table);
+        tableRepository.findAll();
+    }
+
+    public static void cancelReservation() {
+        Scanner intScanner = new Scanner(System.in);
+        System.out.println("Which reservation should be cancelled? (Please enter below)");
+        View.displayReservations();
+        int reservationId = intScanner.nextInt();
+        reservationRepository.cancel(reservationId);
     }
 
 }

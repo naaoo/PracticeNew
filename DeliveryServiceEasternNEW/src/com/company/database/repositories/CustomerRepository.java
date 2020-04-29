@@ -5,17 +5,12 @@ import com.company.database.model.Customer;
 import java.sql.*;
 
 // does not implement Interface Repository, since methods are used differently
+// only retrieves one customer, doesn't save all customers to a certain array
 public class CustomerRepository {
 
     public static Customer retrieveCustomerData(String firstName, String lastName) {
         DatabaseConnector dbConnector = DatabaseConnector.getInstance();
         Customer customer = null;
-        int id;
-        String locationName;
-        double locationPrice;
-        String password;
-        int amountPastOrders;
-        double discountRate;
         try {
             String queryCustomerData = "SELECT * FROM " +
                     "((customers LEFT JOIN discounts ON customers.past_orders > discounts.needed_orders) " +
@@ -24,15 +19,16 @@ public class CustomerRepository {
                     "' ORDER BY percentage DESC LIMIT 1 ";
             ResultSet rs = dbConnector.fetchData(queryCustomerData);
             while (rs.next()) {
-                id = rs.getInt("id");
-                locationName = rs.getString("name");
-                locationPrice = Math.round(rs.getDouble("price") * 100.0) / 100.0;
-                password = rs.getString("password");
-                amountPastOrders = rs.getInt("past_orders");
-                discountRate = rs.getDouble("percentage") / 100.0;
-                customer = new Customer(id, firstName, lastName, locationName, locationPrice, password, amountPastOrders, discountRate);
+                int id = rs.getInt("id");
+                String locationName = rs.getString("name");
+                double locationPrice = Math.round(rs.getDouble("price") * 100.0) / 100.0;
+                String password = rs.getString("password");
+                int amountPastOrders = rs.getInt("past_orders");
+                double discountRate = rs.getDouble("percentage") / 100.0;
+                boolean isBlocked = rs.getBoolean("blocked");
+                customer = new Customer(id, firstName, lastName, locationName, locationPrice, password,
+                        amountPastOrders, discountRate, isBlocked);
             }
-
         } catch (SQLException ex) {
             System.out.println("Customer data not successfully retrieved!");
             ex.printStackTrace();
@@ -66,5 +62,12 @@ public class CustomerRepository {
                 "VALUES ('" + lastName + "', '" + firstName + "', '"
                 + location + "', '" + password + "')";
         dbConnector.insert(insertUser);
+    }
+
+    public static void blockCustomer(Customer customer) {
+        DatabaseConnector dbConnector = DatabaseConnector.getInstance();
+        String updateBlock = "UPDATE customers SET blocked = 1 WHERE id = " + customer.id;
+        dbConnector.update(updateBlock);
+
     }
 }

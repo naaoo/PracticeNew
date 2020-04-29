@@ -64,7 +64,7 @@ public class DatabaseConnector {
                 System.out.println("no matching entry found");
                 return false;
             } else {
-                System.out.println("delete successful, update your data");
+                System.out.println("delete successful");
                 return true;
             }
         } catch (SQLException ex) {

@@ -15,9 +15,14 @@ public class CustomerController {
         System.out.println("Last name:");
         String lastName = stringScanner.next();
         if (CustomerRepository.checkSignedUp(firstName, lastName)) {
-            System.out.println("Welcome back " + firstName + "!");
             // get Data
             customer = CustomerRepository.retrieveCustomerData(firstName, lastName);
+            // check blocked
+            if (checkIfBlocked(customer)) {
+                System.out.println("Sorry but your account has been blocked. Please contact the administrator.");
+                return null;
+            }
+            System.out.println("Welcome back " + firstName + "!");
             //complete login
             int tries = 3;
             while (tries != 0) {
@@ -30,6 +35,8 @@ public class CustomerController {
                     tries--;
                     if (tries == 0) {
                         System.out.println("Log in failed!");
+                        CustomerRepository.blockCustomer(customer);
+                        return null;
                     } else {
                         if (tries == 1) {
                             System.out.println("Wrong password. " + tries + " try left");
@@ -68,5 +75,13 @@ public class CustomerController {
         }
         // write into database
         CustomerRepository.create(firstName, lastName, location, password);
+    }
+
+    private static boolean checkIfBlocked(Customer customer) {
+        if (customer.isBlocked) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
